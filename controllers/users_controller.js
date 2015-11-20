@@ -1,18 +1,8 @@
 var User = require('../models/User.js');
 var Comment = require('../models/Comment.js')
 
-/*function index(req, res){
-  User.find({}, function(err, users){
-    if (err) console.log(err);
-    res.json(users);
-  });
-}
 
-function create(req, res){
-  var user = new User
-}
-*/
-
+/*USER CRUD*/
 function userIndex(req, res){
   User.find({}, function(err, users){
     if (err) console.log(err);
@@ -21,9 +11,35 @@ function userIndex(req, res){
 }
 
 function createUser(req, res){
-  /*passport.authenticate('local-signup', {
+  passport.authenticate('local-signup', {
         successRedirect: '/profile',
         failureRedirect: '/signup'
-    })
-  */
+    });
+}
+
+function deleteUser(req, res){
+
+}
+
+function updateUser(req, res){
+
+}
+
+function showUser(req, res){
+
+}
+
+
+
+/*comment CRUD*/
+function createUserComment(req, res){
+
+}
+
+function updateUserComment(req, res){
+
+}
+
+function deleteUserComment(req,res){
+
 }
