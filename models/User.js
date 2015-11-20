@@ -7,7 +7,6 @@ var userSchema = new Schema ({
     name: String,
     email: String,
     password: String,
-
   },
   facebook: {
     id: String,
@@ -17,7 +16,6 @@ var userSchema = new Schema ({
   },
   comments: [{type: Schema.Types.ObjectId, ref: 'Comment'}]
 });
-
 
 userSchema.methods.generateHash = function(password){
   return bcrypt.hashSync(password,bcrypt.genSaltSync(8), null);
