@@ -11,7 +11,7 @@ var commentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
-  //subcomments: [commentSchema]
+  //subcomments: [commentSchema] /*this is optional subcomments*/
 });
 
 var Comment = mongoose.model('Comment', commentSchema);
