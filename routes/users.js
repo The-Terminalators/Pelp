@@ -3,6 +3,12 @@ var passport = require('passport');
 var userRouter = express.Router();
 
 
+userRouter.route('/')
+.get(function(req, res){
+  render('index');
+})
+
+
 userRouter.route('/login')
   .get(function(req, res){
     res.render('login', {message: req.flash('loginMessage')})
