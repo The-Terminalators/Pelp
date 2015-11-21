@@ -35,7 +35,7 @@ app.use(ejsLayouts);
 
 //session middleware
 app.use(session({
-  secret: process.env.SECRET,
+  secret: 'JEL',
   cookie: {_expires: 60000000000}
 }))
 
