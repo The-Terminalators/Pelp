@@ -29,8 +29,6 @@ function showUser(req, res){
 
 }
 
-
-
 /*comment CRUD*/
 function createUserComment(req, res){
 

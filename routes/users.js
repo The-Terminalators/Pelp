@@ -2,19 +2,22 @@ var express = require('express');
 var passport = require('passport');
 var userRouter = express.Router();
 
-
 userRouter.route('/')
 .get(function(req, res){
-  render('index');
+  if(req.isAuthenticated()){
+    res.render ('feed')
+  }
+  else {
+    res.render('index');
+  }
 })
-
 
 userRouter.route('/login')
   .get(function(req, res){
     res.render('login', {message: req.flash('loginMessage')})
   })
   .post(passport.authenticate('local-login', {
-    successRedirect: '/profile',
+    successRedirect: '/',
     failureRedirect: '/login',
     failureFlash: true
   }))
@@ -31,13 +34,14 @@ userRouter.route('/signup')
   }))
 
   userRouter.get('/profile', isLoggedIn, function(req, res){
+    console.log(req)
     res.render('profile',{user:req.user});
   });
 
   userRouter.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email']}));
 
   userRouter.get('/auth/facebook/callback', passport.authenticate('facebook', {
-    successRedirect: '/profile',
+    successRedirect: '/',
     failureRedirect: '/'
   }));
 

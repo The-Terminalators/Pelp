@@ -29,6 +29,8 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+
+
 //ejs configuration
 app.set('view engine', 'ejs');
 app.use(ejsLayouts);
@@ -45,9 +47,9 @@ app.use(passport.session());
 app.use(flash());
 
 /*Home/ Landing page and root route*/
-app.get('/', function(req, res){
-  res.render('index');
-});
+// app.get('/', function(req, res){
+//   res.render('index');
+// });
 
 app.use('/', userRoutes);
 
