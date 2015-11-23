@@ -53,7 +53,7 @@ passport.use(new FacebookStrategy({
   callbackURL: configAuth.facebookAuth.callbackURL,
   profileFields: configAuth.facebookAuth.profileFields
 }, function(token, refreshToken, profile, done){
-  User.fineOne({'facebook.id': profile.id}, function(err, user){
+  User.findOne({'facebook.id': profile.id}, function(err, user){
     if (err) return done(err);
     if(user){
       return done(null, user);

@@ -1,0 +1,64 @@
+<div class="container">
+  <h1>Sign Up!</h1>
+  <div class="row">
+
+    <form class="col s12" action="/signup" method="post">
+
+      <div class="row">
+        <div class="input-field col s12">
+          <input placeholder="Full Name" id="name" type="text" class="validate" name="name">
+          <!--<label for="full_name">Full Name</label>-->
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field col s12">
+          <input placeholder="Email" id="email" type="text" class="validate" name="email">
+          <!--<label for="first_name">Email</label>-->
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field col s12">
+          <input placeholder="Password" id="password" type="password" class="validate" name="password">
+          <!--<label for="password">Password</label>-->
+        </div>
+      </div>
+
+      <button type="submit" class="waves-effect waves-light btn submit-btn">Submit</button>
+    </form>
+  </div>
+
+  <p>
+    Or, <a href="/login">Login</a>
+  </p>
+
+</div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+
+    /*var password = null;
+    var password_conf = null;
+
+  $('#password').on('keyup', function(event){
+    password = $('#password').val();
+  })
+
+  $('#passwordConfirmation').on('keyup', function(event){
+    password_conf = $('#passwordConfirmation').val();
+  })
+
+  $('.submit-btn').on('click', function(event){
+    if (password != password_conf){
+      event.preventDefault();
+      alert("Passwords do not match!");
+      password = null;
+      password_conf = null;
+      $('#password').val('');
+      $('#passwordConfirmation').val('');
+    }
+*/
+  })
+
+</script>
