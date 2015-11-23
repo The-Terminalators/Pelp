@@ -5,10 +5,10 @@ var userRouter = express.Router();
 userRouter.route('/')
 .get(function(req, res){
   if(req.isAuthenticated()){
-    res.render ('feed')
+    res.render ('feed', {user: req.user})
   }
   else {
-    res.render('index');
+    res.render('index', {user: req.user});
   }
 })
 
