@@ -62,18 +62,83 @@ function updateUser(req, res){
   });
 }
 
+
+
+
+
+
+
 /*comment CRUD*/
 
-function createUserComment(req, res){
-
+function indexComment(req,res) {
+  Comment.find({}, function(err, comments){
+    if(err) console.log(err)
+    res.json(comments)
+  })
 }
 
-function updateUserComment(req, res){
+function createComment(req, res){
+  var comment = new Comment ()
 
+  comment.title = req.body.title
+  comment.entry = req.body.entry
+  comment.date = new Date()
+  comment.creator = req.body._creator
+  comment.rating = req.body.rating
+  comment.money = req.body.money
+  comment.dateCost = req.body.dateCost
+  console.log(req.body)
+
+  comment.save(function(err) {
+    if (err) throw err
+    res.json({success: true, message: "Comment created!"})
+  })
 }
 
-function deleteUserComment(req,res){
+function showComment(req,res) {
+  Comment.find({_id: req.params.id}, function(err, comment){
+    if(err) console.log(err)
+    res.json(comment)
+  })
+}
 
+function updateComment(req, res){
+  Comment.findById( req.params.id , function(err, comment){
+    if (err) res.send(err);
+    console.log("THE REQUEST BODY IS: ", req.body)
+
+    if(req.body.title){
+      comment.title = req.body.title;
+    }
+
+    if(req.body.entry){
+      comment.entry = req.body.entry;
+    }
+
+    if(req.body.rating){
+      comment.rating = req.body.rating;
+    }
+
+    if(req.body.money){
+      comment.money = req.body.money;
+    }
+
+    if(req.body.dateCost){
+      comment.dateCost = req.body.dateCost;
+    }
+
+    comment.save(function(err){
+      if (err) res.send(err);
+      res.json({message: "Success!"});
+    });
+  });
+}
+
+function deleteComment(req,res){
+  Comment.remove({_id: req.params.id}, function(err, comment){
+    if(err) console.log(err)
+    res.json(comment)
+  })
 }
 
 
@@ -81,5 +146,10 @@ module.exports = {
   index: userIndex,
   show: showUser,
   update: updateUser,
-  destroy: deleteUser
+  destroy: deleteUser,
+  indexComment: indexComment,
+  createComment: createComment,
+  showComment: showComment,
+  updateComment: updateComment,
+  deleteComment: deleteComment
 }

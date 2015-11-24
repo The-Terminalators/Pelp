@@ -17,7 +17,11 @@ var userSchema = new Schema ({
   },
   comments: [{type: Schema.Types.ObjectId, ref: 'Comment'}],
   overallRating: Number,
-  ratings: []
+  ratings: [],
+  overallMoney: Number,
+  moneys: [],
+  overallDateCost: Number,
+  dateCosts: []
 });
 
 userSchema.methods.generateHash = function(password){

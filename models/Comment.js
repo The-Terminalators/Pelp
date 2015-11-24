@@ -4,14 +4,16 @@ var Schema = mongoose.Schema;
 
 
 var commentSchema = new Schema({
-  title: String,
-  entry: String,
+  title: {type: String, required: true},
+  entry: {type: String, required: true},
   date: Date,
   _creator: {
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
-  rating: Number
+  rating: {type: Number, required: true},
+  money: {type: Number, required: true},
+  dateCost: {type: Number, required: true}
   //subcomments: [commentSchema] /*this is optional subcomments*/
 });
 
