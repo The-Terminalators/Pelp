@@ -1,5 +1,6 @@
 var User = require('../models/User.js');
 var Comment = require('../models/Comment.js')
+var bcrypt = require('bcrypt-nodejs')
 
 
 /*USER CRUD*/
@@ -32,16 +33,34 @@ function deleteUser(req, res){
 }
 
 function updateUser(req, res){
-  User.findOneAndUpdate({email: req.params.email}, {
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password
-  }, function(err, user){
+  User.findById( req.params.id , function(err, user){
+    console.log("USER IS: ", user);
+
+
+    if (err) res.send(err);
     if (err) console.log(err);
-    res.json(user);
+    console.log("THE REQUEST BODY IS: ", req.body)
+
+    if(req.body.name){
+      user.local.name = req.body.name;
+      //console.log(user.local.name)
+    }
+    if(req.body.email){
+      user.local.email = req.body.email;
+      //console.log(user.local.email)
+    }
+    if(req.body.password){
+      user.local.password = req.body.password;
+      user.local.password = user.generateHash(user.local.password)
+      //console.log(user.local.password)
+    }
+
+    user.save(function(err){
+      if (err) res.send(err);
+      res.json({message: "Success!"});
+    });
   });
 }
-
 
 /*comment CRUD*/
 
@@ -60,7 +79,6 @@ function deleteUserComment(req,res){
 
 module.exports = {
   index: userIndex,
-  create: createUser,
   show: showUser,
   update: updateUser,
   destroy: deleteUser

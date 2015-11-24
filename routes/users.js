@@ -15,7 +15,7 @@ userRouter.route('/')
 
 userRouter.route('/login')
   .get(function(req, res){
-    res.render('login', {message: req.flash('loginMessage')})
+    res.render('login', {message: req.flash('loginMessage'), user:req.user })
   })
   .post(passport.authenticate('local-login', {
     successRedirect: '/',
@@ -26,7 +26,7 @@ userRouter.route('/login')
 userRouter.route('/signup')
   .get(function(req,res){
     res.render('signup',{
-      message: req.flash('signupMessage')})
+      message: req.flash('signupMessage'), user:req.user})
     })
   .post(passport.authenticate('local-signup', {
     successRedirect: '/profile',
@@ -57,6 +57,7 @@ userRouter.route('/signup')
   userRouter.route('/users/:id')
   .get(usersController.show)
   .delete(usersController.destroy)
+  .patch(usersController.update)
 
 
 
