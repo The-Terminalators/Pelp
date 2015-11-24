@@ -1,6 +1,7 @@
 var express = require('express');
 var passport = require('passport');
 var userRouter = express.Router();
+var usersController = require('../controllers/users_controller.js');
 
 userRouter.route('/')
 .get(function(req, res){
@@ -49,6 +50,15 @@ userRouter.route('/signup')
     req.logout();
     res.redirect('/');
   });
+
+  userRouter.route('/users')
+  .get(usersController.index)
+
+  userRouter.route('/users/:id')
+  .get(usersController.show)
+  .delete(usersController.destroy)
+
+
 
   function isLoggedIn(req, res, next){
     if(req.isAuthenticated()) return next();

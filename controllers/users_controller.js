@@ -17,8 +17,15 @@ function createUser(req, res){
     });
 }
 
+function showUser(req, res){
+  User.findById(req.params.id, function(err, user){
+    if (err) console.log(err);
+    res.json(user);
+  });
+}
+
 function deleteUser(req, res){
-  User.remove({email: req.params.email}, function(err){
+  User.remove({ _id: req.params.id}, function(err){
     if (err) console.log(err);
     res.json({success: true, message: "User deleted"});
   });
@@ -35,15 +42,9 @@ function updateUser(req, res){
   });
 }
 
-function showUser(req, res){
-  User.find({email: req.params.email}, function(err, user){
-    if (err) console.log(err);
-    res.json(user);
-  });
-}
-
 
 /*comment CRUD*/
+
 function createUserComment(req, res){
 
 }
@@ -60,7 +61,7 @@ function deleteUserComment(req,res){
 module.exports = {
   index: userIndex,
   create: createUser,
-  show: deleteUser,
+  show: showUser,
   update: updateUser,
   destroy: deleteUser
 }
