@@ -11,6 +11,7 @@ var commentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
+  rating: Number
   //subcomments: [commentSchema] /*this is optional subcomments*/
 });
 

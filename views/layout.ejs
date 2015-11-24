@@ -40,14 +40,16 @@
           </nav>
         </li>
 
-        <li><a href="#"></a></li>
 
-        <li><a class="dropdown-button btn" href="#" data-activates="dropdown1">Account</a>
-            <ul id="dropdown1" class="dropdown-content">
-              <li><a href="#">Profile</a></li>
-              <li><a href="/logout">Logout</a></li>
-            </ul>
-        </li>
+        <li><a href="#"></a></li>
+        <% if(user) { %>
+          <li><a class="dropdown-button btn" href="#" data-activates="dropdown1"><%= user.local.name || user.facebook.name %></a>
+              <ul id="dropdown1" class="dropdown-content">
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/logout">Logout</a></li>
+              </ul>
+          </li>
+        <%}%>
       </ul>
 
       <ul id="nav-mobile" class="side-nav">

@@ -1,20 +1,24 @@
 var express = require('express');
 var passport = require('passport');
 var userRouter = express.Router();
-
+var usersController = require('../controllers/users_controller.js');
 
 userRouter.route('/')
 .get(function(req, res){
-  render('index');
+  if(req.isAuthenticated()){
+    res.render ('feed', {user: req.user})
+  }
+  else {
+    res.render('index', {user: req.user});
+  }
 })
-
 
 userRouter.route('/login')
   .get(function(req, res){
-    res.render('login', {message: req.flash('loginMessage')})
+    res.render('login', {message: req.flash('loginMessage'), user:req.user })
   })
   .post(passport.authenticate('local-login', {
-    successRedirect: '/profile',
+    successRedirect: '/',
     failureRedirect: '/login',
     failureFlash: true
   }))
@@ -22,7 +26,7 @@ userRouter.route('/login')
 userRouter.route('/signup')
   .get(function(req,res){
     res.render('signup',{
-      message: req.flash('signupMessage')})
+      message: req.flash('signupMessage'), user:req.user})
     })
   .post(passport.authenticate('local-signup', {
     successRedirect: '/profile',
@@ -31,13 +35,14 @@ userRouter.route('/signup')
   }))
 
   userRouter.get('/profile', isLoggedIn, function(req, res){
+    console.log(req)
     res.render('profile',{user:req.user});
   });
 
   userRouter.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email']}));
 
   userRouter.get('/auth/facebook/callback', passport.authenticate('facebook', {
-    successRedirect: '/profile',
+    successRedirect: '/',
     failureRedirect: '/'
   }));
 
@@ -45,6 +50,16 @@ userRouter.route('/signup')
     req.logout();
     res.redirect('/');
   });
+
+  userRouter.route('/users')
+  .get(usersController.index)
+
+  userRouter.route('/users/:id')
+  .get(usersController.show)
+  .delete(usersController.destroy)
+  .patch(usersController.update)
+
+
 
   function isLoggedIn(req, res, next){
     if(req.isAuthenticated()) return next();

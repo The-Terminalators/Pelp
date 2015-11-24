@@ -45,9 +45,9 @@ app.use(passport.session());
 app.use(flash());
 
 /*Home/ Landing page and root route*/
-app.get('/', function(req, res){
-  res.render('index');
-});
+// app.get('/', function(req, res){
+//   res.render('index');
+// });
 
 app.use('/', userRoutes);
 
