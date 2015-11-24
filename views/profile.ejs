@@ -1,4 +1,6 @@
 <link rel="stylesheet" type="text/css" href="./assets/css/profile.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="./assets/rater/rater.js"></script>
 
 <br>
    <!-- Page Layout here -->
@@ -8,7 +10,9 @@
           <!-- Grey navigation panel -->
           	<span class="flow-text"><img src="http://www.hdrspotting.com/images/default_profile.jpg"></span>
           	<h3><%= user.local.name || user.facebook.name %></h3>
-            <h5>*****</h5>
+            <h5>
+              <div class="rate"></div>
+            </h5>
             <h5>$$$$$$$$$$$$$$$</h5>
             <br><a href="#">Change Settings</a>
         </div>
