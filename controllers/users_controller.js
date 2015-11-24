@@ -63,11 +63,6 @@ function updateUser(req, res){
 }
 
 
-
-
-
-
-
 /*comment CRUD*/
 
 function indexComment(req,res) {
@@ -83,15 +78,19 @@ function createComment(req, res){
   comment.title = req.body.title
   comment.entry = req.body.entry
   comment.date = new Date()
-  comment.creator = req.body._creator
+  comment._creator = req.body._creator
   comment.rating = req.body.rating
   comment.money = req.body.money
   comment.dateCost = req.body.dateCost
   console.log(req.body)
 
   comment.save(function(err) {
-    if (err) throw err
+    if (err) console.log(err)
     res.json({success: true, message: "Comment created!"})
+  })
+  User.findById(req.body.user, function(err, user) {
+  if (err) throw err
+  user.addComments(comment)
   })
 }
 
