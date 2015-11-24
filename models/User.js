@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 var Schema = mongoose.Schema;
 
+
 var userSchema = new Schema ({
   local: {
     name: String,
@@ -14,7 +15,9 @@ var userSchema = new Schema ({
     token: String,
     email: String
   },
-  comments: [{type: Schema.Types.ObjectId, ref: 'Comment'}]
+  comments: [{type: Schema.Types.ObjectId, ref: 'Comment'}],
+  overallRating: Number,
+  ratings: []
 });
 
 userSchema.methods.generateHash = function(password){
