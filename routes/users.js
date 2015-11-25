@@ -70,7 +70,7 @@ userRouter.route('/signup')
     .patch(usersController.updateComment)
     .delete(usersController.deleteComment)
 
-    userRouter.route('/search/:name')
+    userRouter.route('/search/')
     .get(usersController.findUsers)
 
 
