@@ -13,7 +13,7 @@
           <!-- Grey navigation panel -->
           	<span class="flow-text"><img src="http://www.hdrspotting.com/images/default_profile.jpg"></span>
           	<h3 class="userName"><%= user.local.name || user.facebook.name %></h3>
-            <p class="userId"> <%= user._id%></p>
+            <p class="userId"> <%= user._id %> </p>
             <div class="">Hotness</div>
             <div class="rw-ui-container"></div>
             <h5>$$$$$$$$$$$$$$$</h5>
@@ -31,13 +31,6 @@
       <div class="col s9 offset-s6">
         <!-- Teal page content  -->
         <div class="container">
-
-
-          <script type="text/javascript">
-            $.ajax({
-              url: '/users/:id'
-            })
-          </script>
 
 
            <!-- Dropdown Structure -->
@@ -63,7 +56,7 @@
             success: function(curr_user){
               console.log(curr_user)
               for (var i = 0; i < curr_user.comments.length; i++){
-
+                console.log(i)
                 var commentor_name = null;
                 var title = curr_user.comments[i].title
                 var text = curr_user.comments[i].entry
@@ -82,7 +75,6 @@
                   }
                 })
               }
-
             },
             error: function() {
               console.log("I failed master");
