@@ -147,14 +147,22 @@ if (!String.prototype.includes) {
 }
 
 
+
+
+
 /*SEARCH ROUTES*/
 function findUsers(req, res){
+
+  console.log("PARAMS ARE: ", req.params.name)
+
   var users_found = [];
   User.find({}, function(err, users){
     //console.log("TEST");
     //console.log(users[1]);
     console.log("REQUESTED: ", req.params.name)
     for(var i = 0; i < users.length; i++){
+
+
 
       var userName = (users[i].local.name || users[i].facebook.name).toLowerCase();
 
