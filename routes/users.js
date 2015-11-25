@@ -51,15 +51,24 @@ userRouter.route('/signup')
     res.redirect('/');
   });
 
-  userRouter.route('/users')
-  .get(usersController.index)
 
   userRouter.route('/users/:id')
-  .get(usersController.show)
-  .delete(usersController.destroy)
-  .patch(usersController.update)
+    .get(usersController.show)
+    .delete(usersController.destroy)
+    .patch(usersController.update)
+
+  userRouter.route('/users')
+    .get(usersController.index)
 
 
+  userRouter.route('/comments')
+    .get(usersController.indexComment)
+    .post(usersController.createComment)
+
+  userRouter.route('/comments/:id')
+    .get(usersController.showComment)
+    .patch(usersController.updateComment)
+    .delete(usersController.deleteComment)
 
   function isLoggedIn(req, res, next){
     if(req.isAuthenticated()) return next();
