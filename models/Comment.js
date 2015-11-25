@@ -11,6 +11,10 @@ var commentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
   rating: {type: Number, required: true, max: 5},
   money: {type: Number, required: true, max: 5},
   dateCost: {type: Number, required: true, max: 5}

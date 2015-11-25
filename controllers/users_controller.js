@@ -19,10 +19,18 @@ function createUser(req, res){
 }
 
 function showUser(req, res){
-  User.findById(req.params.id, function(err, user){
+  // User.findById(req.params.id, function(err, user){
+  //   if (err) console.log(err);
+  //   res.json(user);
+  // });
+  User.findOne(req.params.id)
+  .populate('comments')
+  .exec(function(err, user){
     if (err) console.log(err);
+    console.log(user);
     res.json(user);
   });
+
 }
 
 function deleteUser(req, res){
@@ -79,6 +87,8 @@ function createComment(req, res){
   comment.entry = req.body.entry
   comment.date = new Date()
   comment._creator = req.body._creator
+  comment.user = req.body.user
+
   comment.rating = req.body.rating
   comment.money = req.body.money
   comment.dateCost = req.body.dateCost
@@ -90,12 +100,16 @@ function createComment(req, res){
   })
   User.findById(req.body.user, function(err, user) {
   if (err) throw err
-  user.addComments(comment)
+    user.addComments(comment)
   })
 }
 
 function showComment(req,res) {
-  Comment.find({_id: req.params.id}, function(err, comment){
+  Comment
+    .findOne({_id: req.params.id})
+    // .populate('_creator')
+    // .populate('user')
+    .exec(function(err, comment){
     if(err) console.log(err)
     res.json(comment)
   })

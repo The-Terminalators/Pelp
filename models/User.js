@@ -47,6 +47,7 @@ userSchema.methods.addComments=function(comment){
 
 //create method on user model that grabs all values in user array and gives average in "overallRating"
 
+
 var User = mongoose.model('User', userSchema);
 
 module.exports = User;
