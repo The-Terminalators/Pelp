@@ -44,7 +44,7 @@
 
         <li><a href="#"></a></li>
         <% if(user) { %>
-          <li><a class="dropdown-button btn  blue darken-4" href="#" data-activates="dropdown1"><%= user.local.name || user.facebook.name %></a>
+          <li><a class="dropdown-button btn  blue" href="#" data-activates="dropdown1"><%= user.local.name || user.facebook.name %></a>
               <ul id="dropdown1" class="dropdown-content">
                 <li><a href="/profile">Profile</a></li>
                 <li><a href="/logout">Logout</a></li>
