@@ -1,4 +1,5 @@
-(function(d, t, e, m){
+
+/*(function(d, t, e, m){
 
     // Async Rating-Widget initialization.
     window.RW_Async_Init = function(){
@@ -30,3 +31,4 @@
     rw.src = p + "//" + a + "external" + f + ".js?ck=" + ck;
     s.parentNode.insertBefore(rw, s);
     }(document, new Date(), "script", "rating-widget.com/"));
+*/

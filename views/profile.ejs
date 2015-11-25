@@ -12,7 +12,8 @@
         <div class="col s3 offset-s1">
           <!-- Grey navigation panel -->
           	<span class="flow-text"><img src="http://www.hdrspotting.com/images/default_profile.jpg"></span>
-          	<h3><%= user.local.name || user.facebook.name %></h3>
+          	<h3 class="userName"><%= user.local.name || user.facebook.name %></h3>
+            <p class="userId"> <%= user._id %> </p>
             <div class="">Hotness</div>
             <div class="rw-ui-container"></div>
             <h5>$$$$$$$$$$$$$$$</h5>
@@ -32,13 +33,6 @@
         <div class="container">
 
 
-          <script type="text/javascript">
-            $.ajax({
-              url: '/users/:id'
-            })
-          </script>
-
-
            <!-- Dropdown Structure -->
 
 
@@ -49,17 +43,47 @@
             </li>
       </ul>
 
+      <script type="text/javascript">
+        window.onload = function() {
 
+          console.log($('.userId').html())
 
+          var user_id = $('.userId').html()
 
+          $.ajax({
+            url: '/users/' + user_id,
+            method: 'GET',
+            success: function(curr_user){
+              console.log(curr_user)
+              for (var i = 0; i < curr_user.comments.length; i++){
+                console.log(i)
+                var commentor_name = null;
+                var title = curr_user.comments[i].title
+                var text = curr_user.comments[i].entry
+                $.ajax({
+                  url: '/users/' + curr_user.comments[i]._creator,
+                  method: 'GET',
+                  success: function(commentor){
+                    commentor_name = commentor.local.name || commentor.facebook.name
+                    $('.appendTo').append("<h4>" + commentor_name + "</h4>");
+                    $('.appendTo').append("<p>" + title + "</p>");
+                    $('.appendTo').append("<span class='flow-text'>" + text + "</span>");
+                    $('.appendTo').append("<br><br><br>")
+                  },
+                  error: function(){
+                    console.log("Error retrienving name")
+                  }
+                })
+              }
+            },
+            error: function() {
+              console.log("I failed master");
+            }
+          })
+        }
+      </script>
 
+          <span class="appendTo"></span>
 
-
-
-
-          <h4>Jake Gyllenhaal</h4>
-        	<span class="flow-text">
-            Forage hella leggings, yr schlitz tilde freegan 3 wolf moon intelligentsia. Before they sold out schlitz vice austin, gastropub mumblecore typewriter keytar selfies. Etsy tousled 8-bit occupy. Bitters small batch seitan, bespoke selvage post-ironic tacos. Fap flexitarian banjo vice plaid. Pabst fap echo park, brunch plaid mlkshk lo-fi +1 schlitz wolf. Listicle 3 wolf moon cold-pressed, offal scenester normcore etsy microdosing taxidermy cliche tilde gastropub literally tumblr.
-        	</span>
         </div><br>
     </div>

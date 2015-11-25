@@ -23,7 +23,7 @@ function showUser(req, res){
   //   if (err) console.log(err);
   //   res.json(user);
   // });
-  User.findOne(req.params.id)
+  User.findById(req.params.id)
   .populate('comments')
   .exec(function(err, user){
     if (err) console.log(err);
