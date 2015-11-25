@@ -37,6 +37,8 @@ userSchema.methods.addComments=function(comment){
   console.log('======USER=====',user)
   user.comments.push(comment)
   user.ratings.push(comment.rating)
+  user.moneys.push(comment.money)
+  user.dateCosts.push(comment.dateCost)
   user.save(function(err, user){
     if (err) console.log(err)
     console.log(user)
