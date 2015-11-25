@@ -70,6 +70,11 @@ userRouter.route('/signup')
     .patch(usersController.updateComment)
     .delete(usersController.deleteComment)
 
+    userRouter.route('/search/:name')
+    .get(usersController.findUsers)
+
+
+
   function isLoggedIn(req, res, next){
     if(req.isAuthenticated()) return next();
     res.redirect('/');

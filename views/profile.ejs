@@ -4,8 +4,6 @@
 <script type="text/javascript" src="./assets/js/profile.js"></script>
 
 
-
-
 <br>
    <!-- Page Layout here -->
     <div class="row">
@@ -19,7 +17,11 @@
             <div class="rw-ui-container"></div>
             <h5>$$$$$$$$$$$$$$$</h5>
             <br>
-            <a href="#">Change Settings</a>
+            <a class="waves-effect waves-light btn blue" href="/">Back to Feed</a>
+            <br>
+            <br>
+            <a class="waves-effect waves-light btn blue" href="#">Change Settings</a>
+
         </div>
 
       </div><br>
@@ -28,6 +30,33 @@
       <div class="col s9 offset-s6">
         <!-- Teal page content  -->
         <div class="container">
+
+
+          <script type="text/javascript">
+            $.ajax({
+              url: '/users/:id'
+            })
+          </script>
+
+
+           <!-- Dropdown Structure -->
+
+
+        <ul class="collapsible" data-collapsible="accordion">
+            <li>
+              <div class="collapsible-header"><i class="material-icons">comment</i>Review <%= %></div>
+              <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+            </li>
+      </ul>
+
+
+
+
+
+
+
+
+
           <h4>Jake Gyllenhaal</h4>
         	<span class="flow-text">
             Forage hella leggings, yr schlitz tilde freegan 3 wolf moon intelligentsia. Before they sold out schlitz vice austin, gastropub mumblecore typewriter keytar selfies. Etsy tousled 8-bit occupy. Bitters small batch seitan, bespoke selvage post-ironic tacos. Fap flexitarian banjo vice plaid. Pabst fap echo park, brunch plaid mlkshk lo-fi +1 schlitz wolf. Listicle 3 wolf moon cold-pressed, offal scenester normcore etsy microdosing taxidermy cliche tilde gastropub literally tumblr.

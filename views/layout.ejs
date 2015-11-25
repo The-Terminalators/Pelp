@@ -12,6 +12,9 @@
   <link rel="stylesheet" type="text/css" href="./assets/css/navbar.css">
   <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js" ></script>
+
+
   <title>Parallax Template - Materialize</title>
 
   <!-- CSS  -->
@@ -21,16 +24,16 @@
 </head>
 <body>
 
-  <nav class="red lighten-2" role="navigation">
+  <nav class="pink lighten-2" role="navigation">
     <div class="nav-wrapper container">
       <a id="logo-container" href="/" class="brand-logo"><img class="brand-logo" src="./assets/logos/Pelp.png"></a>
       <ul class="right hide-on-med-and-down">
         <li>
           <nav>
-            <div class="nav-wrapper red lighten-2">
-              <form>
+            <div class="nav-wrapper pink lighten-2">
+              <form action="/search/:name" method="get">
                 <div class="input-field">
-                  <input type="search" id="search" required placeholder="Search Users...">
+                  <input type="search" id="search" name="name" required placeholder="Search Users...">
                   <label for="search"><i class="material-icons">search</i></label>
                   <i class="material-icons">close</i>
                 </div>
@@ -39,10 +42,9 @@
           </nav>
         </li>
 
-
         <li><a href="#"></a></li>
         <% if(user) { %>
-          <li><a class="dropdown-button btn" href="#" data-activates="dropdown1"><%= user.local.name || user.facebook.name %></a>
+          <li><a class="dropdown-button btn  blue" href="#" data-activates="dropdown1"><%= user.local.name || user.facebook.name %></a>
               <ul id="dropdown1" class="dropdown-content">
                 <li><a href="/profile">Profile</a></li>
                 <li><a href="/logout">Logout</a></li>
