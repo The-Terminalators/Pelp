@@ -140,6 +140,44 @@ function deleteComment(req,res){
   })
 }
 
+if (!String.prototype.includes) {
+  String.prototype.includes = function() {'use strict';
+    return String.prototype.indexOf.apply(this, arguments) !== -1;
+  };
+}
+
+
+/*SEARCH ROUTES*/
+function findUsers(req, res){
+  var users_found = [];
+  User.find({}, function(err, users){
+    //console.log("TEST");
+    //console.log(users[1]);
+    console.log("REQUESTED: ", req.params.name)
+    for(var i = 0; i < users.length; i++){
+
+      var userName = (users[i].local.name || users[i].facebook.name).toLowerCase();
+
+      var user_name = (users[i].local.name || users[i].facebook.name)
+      var user_id = users[i]._id
+
+      console.log("USER: ", userName)
+
+      var searchName = req.params.name.toLowerCase();
+      console.log(userName.indexOf(searchName) > -1)
+      if (userName.indexOf(searchName) > -1){
+        object = {
+          _id: user_id,
+          name: user_name
+        }
+        console.log("WE ARE HERE");
+        users_found.push(object)
+      }
+    }
+    res.send(users_found);
+  })
+}
+
 
 module.exports = {
   index: userIndex,
@@ -150,5 +188,6 @@ module.exports = {
   createComment: createComment,
   showComment: showComment,
   updateComment: updateComment,
-  deleteComment: deleteComment
+  deleteComment: deleteComment,
+  findUsers: findUsers
 }
