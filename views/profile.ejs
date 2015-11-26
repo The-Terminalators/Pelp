@@ -36,45 +36,58 @@
            <!-- Dropdown Structure -->
 
 
+       <!--
         <ul class="collapsible" data-collapsible="accordion">
             <li>
               <div class="collapsible-header"><i class="material-icons">comment</i>Review <%= %></div>
               <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
             </li>
-      </ul>
+      </ul> -->
 
       <script type="text/javascript">
         window.onload = function() {
 
           console.log($('.userId').html())
-
-          var user_id = $('.userId').html()
-
+          var user_id = $('.userId').text()
+          var i = 0
           $.ajax({
-            url: '/users/' + user_id,
+            url: '/users/<%= user._id %>', // + user_id,
             method: 'GET',
             success: function(curr_user){
-              console.log(curr_user)
-              for (var i = 0; i < curr_user.comments.length; i++){
-                console.log(i)
-                var commentor_name = null;
-                var title = curr_user.comments[i].title
-                var text = curr_user.comments[i].entry
+              // console.log(curr_user)
+                var commenter_name = null;
+                var title = null;
+                var text = null;
+                var commenters = [];
+              for (i ; i < curr_user.comments.length; i++){
+                // console.log(curr_user.comments[i].entry)
+
+                title = curr_user.comments[i].title
+                text = curr_user.comments[i].entry
+                $('.appendTo').append("<div id='" + curr_user.comments[i]._creator + "'> </div>").last()
+                $('#' + curr_user.comments[i]._creator).append("<p>" + curr_user.comments[i].title + "</p>");
+                $('#' + curr_user.comments[i]._creator).append("<br><br><br>")
+                $('#' + curr_user.comments[i]._creator).append("<span class='flow-text'>" + curr_user.comments[i].entry + "</span>");
+
                 $.ajax({
                   url: '/users/' + curr_user.comments[i]._creator,
                   method: 'GET',
-                  success: function(commentor){
-                    commentor_name = commentor.local.name || commentor.facebook.name
-                    $('.appendTo').append("<h4>" + commentor_name + "</h4>");
-                    $('.appendTo').append("<p>" + title + "</p>");
-                    $('.appendTo').append("<span class='flow-text'>" + text + "</span>");
-                    $('.appendTo').append("<br><br><br>")
+                  success: function(commenter){
+
+                    var commenterId = commenter._id
+                    var commenter = commenter.local || commenter.facebook
+                    console.log(commenterId);
+                    $('#' + commenterId).append("<h4>" + commenter.name + "</h4>");
+
                   },
                   error: function(){
                     console.log("Error retrienving name")
                   }
                 })
+
+
               }
+              console.log(commenters)
             },
             error: function() {
               console.log("I failed master");
@@ -83,7 +96,7 @@
         }
       </script>
 
-          <span class="appendTo"></span>
+          <div class="appendTo"></div>
 
         </div><br>
     </div>

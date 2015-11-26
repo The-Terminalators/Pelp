@@ -27,7 +27,7 @@ function showUser(req, res){
   .populate('comments')
   .exec(function(err, user){
     if (err) console.log(err);
-    console.log(user);
+    console.log();
     res.json(user);
   });
 
@@ -88,7 +88,6 @@ function createComment(req, res){
   comment.date = new Date()
   comment._creator = req.body._creator
   comment.user = req.body.user
-
   comment.rating = req.body.rating
   comment.money = req.body.money
   comment.dateCost = req.body.dateCost
@@ -103,14 +102,24 @@ function createComment(req, res){
     user.addComments(comment)
   })
 }
-
+// {
+//         path: "sessions",        // where I want the data to go on the object
+//         select: 'properties id', // grab these fields
+//         match: {userId: id},     // with this userId, same one I grabbed the user with.
+//         model: "GameSession",    // in this collection
+//         options: {limit: 5}      // but not all of them kthx.
+//     }
 function showComment(req,res) {
   Comment
     .findOne({_id: req.params.id})
-    // .populate('_creator')
-    // .populate('user')
+    .populate('_creator')
+    //.populate('user')
     .exec(function(err, comment){
     if(err) console.log(err)
+
+
+
+    console.log('==================',comment._creator.facebook.name)
     res.json(comment)
   })
 }
