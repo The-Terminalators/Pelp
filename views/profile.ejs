@@ -173,6 +173,11 @@
 
                     /**************READ AJAX starts here******************/
 
+                    if (curr_user.comments.length == 0){
+                      $('.appendTo').append("<h1> You have no comments yet! </h1>")
+                      return;
+                    }
+
                     curr_user_comments = curr_user.comments;
                   },
                   error: function() {
