@@ -1,31 +1,32 @@
-<link rel="stylesheet" type="text/css" href="./assets/css/profile.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-<script type="text/javascript" src="./assets/js/profile.js"></script>
+<div class="container">
+  <h1>Settings</h1>
 
+  <div class="row">
+      <form class="col s12">
+        <div class="row">
 
-<div class="row">
-  <form class="col s12">
-    <div class="row">
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="name" type="text" class="validate">
+            <label for="name">Name</label>
+          </div>
+        </div>
+              
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="password" type="password" class="validate">
+            <label for="password">Password</label>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="email" type="email" class="validate">
+            <label for="email" data-error="wrong" data-success="right">Email</label>
+          </div>
+        </div>
+        
+        <button type="submit" class="waves-effect waves-light btn submit-btn">Delete Account</button>
 
-      <div class="input-field col s6">
-        <input id="name" type="text" class="validate">
-        <label for="last_name">Full Name</label>
-      </div>
+      </form>
     </div>
-    
-    <div class="row">
-      <div class="input-field col s12">
-        <input id="password" type="password" class="validate">
-        <label for="password">Password</label>
-      </div>
-    </div>
-    
-    <div class="row">
-      <div class="input-field col s12">
-        <input id="email" type="email" class="validate">
-        <label for="email" data-error="wrong" data-success="right">Email</label>
-      </div>
-    </div>
-  </form>
-</div>
