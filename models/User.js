@@ -53,12 +53,3 @@ userSchema.methods.addComments=function(comment){
 var User = mongoose.model('User', userSchema);
 
 module.exports = User;
-
-
-
-
-
-
-
-
-
