@@ -34,32 +34,33 @@ function showUser(req, res){
 }
 
 function deleteUser(req, res){
-  console.log("WE ARE DELETEING=======", req)
   User.remove({ _id: req.params.id}, function(err){
     if (err) console.log(err);
     res.json({success: true, message: "User deleted"});
-    res.redirect('/')
   });
 }
 
 function updateUser(req, res){
   User.findById( req.params.id , function(err, user){
     console.log("USER IS: ", user);
-
-
     if (err) res.send(err);
     if (err) console.log(err);
-    console.log("THE REQUEST BODY IS: ", req.body)
 
-    if(req.body.name){
+    console.log("THE REQUEST BODY IS: ", req.body)
+    console.log("NAME: ", req.body.name)
+    console.log("NAME: ", req.body.email)
+    console.log("NAME: ", req.body.password)
+
+
+    if(req.body.name !== undefined ){
       user.local.name = req.body.name;
       //console.log(user.local.name)
     }
-    if(req.body.email){
+    if(req.body.email !== undefined){
       user.local.email = req.body.email;
       //console.log(user.local.email)
     }
-    if(req.body.password){
+    if(req.body.password !== undefined){
       user.local.password = req.body.password;
       user.local.password = user.generateHash(user.local.password)
       //console.log(user.local.password)

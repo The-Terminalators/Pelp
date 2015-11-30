@@ -27,18 +27,26 @@
               <label for="email" data-error="wrong" data-success="right">Email</label>
             </div>
           </div>
-
+          <!--
           <div class="row">
             <div class="input-field col s12">
               <input id="password" type="password" class="validate">
               <label for="password">Password</label>
             </div>
           </div>
+          -->
 
-            <button id="update-button" class="blue waves-effect waves-light btn submit-btn">Enter Changes</button>
-            <button id="delete-button" class="right red waves-effect waves-light btn submit-btn">Delete Account</button>
+            <button id="update-button" class="blue left waves-effect waves-light btn submit-btn">Enter Changes</button>
+            <button id="delete-button" class="red right waves-effect waves-light btn submit-btn">Delete Account</button>
           </form>
       </div>
+      <br><br>
+
+      <h4>Reset Password?</h4>
+      <button id="reset-password" class="orange left waves-effect waves-light btn submit-btn">Reset Password</button>
+
+
+
     <% } %>
     <% if(user.facebook.name != null) {%>
       <h5>Facebook Users cannot edit their profile</h5>
@@ -58,25 +66,28 @@ window.onload = function() {
 
   console.log("ID IS: ", user_id)
   console.log("NAME IS: ", user_name)
-  console.log("ID IS: ", user_email)
+  console.log("EMAIL IS: ", user_email)
   //console.log("USER: ", user_obj)
 
-
   $('#update-button').click(function(event){
+
     event.preventDefault();
     var input_name =  $('#name').val().toString();
     var input_email = $('#email').val().toString();
-    var input_password = $('#password').val().toString();
+    //var input_password = $('#password').val().toString();
 
     if (input_name == ''){
-      input_name = user_name;
+      input_name = undefined
     }
     if (input_email == ''){
-      input_email = user_email;
+      input_email = undefined;
     }
-    if (input_password == ''){
-      input_password = null
-    }
+    /*if (input_password == ''){
+      alert('You must input your password');
+      return;
+    }*/
+
+    /*validate password*/
 
     $.ajax({
       url: '/users/<%= user._id%>',
@@ -85,7 +96,6 @@ window.onload = function() {
       data: {
         name: input_name,
         email: input_email,
-        password: input_password
       },
       success: function(data, textStatus, jqXHR){
         console.log(data)
@@ -99,7 +109,19 @@ window.onload = function() {
 
   $('#delete-button').click(function(event){
     event.preventDefault();
-
+    if (confirm('This is permanent. You still wanna go through with this?')){
+      $.ajax({
+        url: '/users/<%= user._id%>',
+        method: 'DELETE',
+        success: function(data, textStatus, jqXHR){
+          alert('User has been deleted!');
+          window.location.href = "/";
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log(errorThrown)
+        }
+      })
+    }
   })
 }
 

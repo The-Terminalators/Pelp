@@ -18,10 +18,10 @@ window.onload = function() {
     var input_password = $('#password').val().toString();
 
     if (input_name == ''){
-      input_name = user_name;
+      input_name = undefined;
     }
     if (input_email == ''){
-      input_email = user_email;
+      input_email = undefined;
     }
     if (input_password == ''){
       input_password = null
