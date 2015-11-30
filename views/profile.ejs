@@ -6,6 +6,16 @@
 <link rel="stylesheet" href="./assets/material-icon/css/material-design-iconic-font.min.css">
 
 <br>
+
+<!-- Styles for the icons -->
+<style media="screen">
+  .material-icons.yelloww { color: #ffeb3b; }
+  .material-icons.redd { color: #f44336; }
+  .zmdi.greenn { color: #00e676; }
+
+
+</style>
+
    <!-- Page Layout here -->
     <div class="row">
       <div class="">
@@ -18,40 +28,32 @@
             <div class="">Rating</div>
 
             <div class="ratings">
-              <i class='material-icons yelloww'>grade</i>
-              <i class='material-icons'>grade</i>
-              <i class='material-icons'>grade</i>
-              <i class='material-icons'>grade</i>
-              <i class='material-icons'>grade</i>
+              <i id="r1" class='material-icons'>grade</i>
+              <i id="r2" class='material-icons'>grade</i>
+              <i id="r3"class='material-icons'>grade</i>
+              <i id="r4" class='material-icons'>grade</i>
+              <i id="r5" class='material-icons'>grade</i>
             </div>
 
 
             <div class="">Money</div>
 
             <div class="monies">
-              <i class="zmdi zmdi-money zmdi-hc-3x greenn"></i>
-              <i class="zmdi zmdi-money zmdi-hc-3x"></i>
-              <i class="zmdi zmdi-money zmdi-hc-3x"></i>
-              <i class="zmdi zmdi-money zmdi-hc-3x"></i>
-              <i class="zmdi zmdi-money zmdi-hc-3x"></i>
+              <i id="m1"class="zmdi zmdi-money zmdi-hc-3x"></i>
+              <i id="m2"class="zmdi zmdi-money zmdi-hc-3x"></i>
+              <i id="m3"class="zmdi zmdi-money zmdi-hc-3x"></i>
+              <i id="m4"class="zmdi zmdi-money zmdi-hc-3x"></i>
+              <i id="m5"class="zmdi zmdi-money zmdi-hc-3x"></i>
             </div>
 
             <div class="">Date Cost</div>
             <div class="costs">
-              <i class='material-icons'>grade</i>
-              <i class='material-icons'>grade</i>
-              <i class='material-icons'>grade</i>
-              <i class='material-icons'>grade</i>
-              <i class='material-icons'>grade</i>
+              <i id="c1" class='material-icons'>grade</i>
+              <i id="c2"class='material-icons'>grade</i>
+              <i id="c3"class='material-icons'>grade</i>
+              <i id="c4"class='material-icons'>grade</i>
+              <i id="c5"class='material-icons'>grade</i>
             </div>
-
-
-
-
-            <style media="screen">
-              .material-icons.yelloww { color: #ffeb3b; }
-              .zmdi.greenn { color: #00e676; }
-            </style>
 
             <br>
             <a href="/" method="GET" class="waves-effect waves-light btn blue"><i class="material-icons left">recent_actors</i>Feed</a>
@@ -103,6 +105,67 @@
                   url: '/users/<%= user._id %>',
                   method: 'GET',
                   success: function(curr_user) {
+
+                    /*FIRST we must populate the average ratings, then populate the comments*/
+                    var rating_arr = curr_user.ratings;
+                    var money_arr = curr_user.moneys;
+                    var cost_arr = curr_user.dateCosts;
+
+                    var avg_rating = 0;
+                    var avg_money = 0;
+                    var avg_cost = 0;
+                    var length = 0;
+
+
+                    for(var i = 0; i < rating_arr.length; i++){
+
+                      if (rating_arr[i] != null){
+                        console.log('RATING IS: ', rating_arr[i])
+                          avg_rating += rating_arr[i];
+                          length++;
+                      }
+                    }
+                    avg_rating = (avg_rating / length);
+                    length = 0;
+
+                    for(var i = 0; i < money_arr.length; i++){
+                      if (money_arr[i] != null){
+                        avg_money += money_arr[i];
+                        length++;
+                      }
+                    }
+                    avg_money = (avg_money / length);
+                    length = 0;
+
+                    for(var i = 0; i < cost_arr.length; i++){
+                      if (cost_arr[i] != null){
+                        avg_cost += cost_arr[i];
+                        length++
+                      }
+                    }
+                    avg_cost = (avg_cost / length);
+
+
+                    console.log("CURRENT USER=======", curr_user)
+
+
+                    for (var i = 0; i < avg_rating; i++){
+                      $('#r' + (i + 1)).addClass('yelloww')
+                    }
+
+                    for (var i = 0; i < avg_money; i++){
+                      $('#m' + (i + 1)).addClass('greenn')
+                    }
+
+
+                    for (var i = 0; i < avg_rating; i++){
+                      console.log(avg_rating)
+                      $('#c' + (i + 1)).addClass('redd')
+                    }
+
+
+                    /**************READ AJAX starts here******************/
+
                     curr_user_comments = curr_user.comments;
                   },
                   error: function() {
