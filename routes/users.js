@@ -52,6 +52,10 @@ userRouter.route('/signup')
   });
 
 
+  userRouter.get('/settings', isLoggedIn, function(req, res){
+    res.render('settings', {user: req.user})
+  })
+
   userRouter.route('/users/:id')
     .get(usersController.show)
     .delete(usersController.destroy)
@@ -72,6 +76,8 @@ userRouter.route('/signup')
 
     userRouter.route('/search/')
     .get(usersController.findUsers)
+
+
 
 
 

@@ -2,32 +2,71 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="./assets/js/profile.js"></script>
-
+<link rel="stylesheet" href="./assets/material-icon/css/material-design-iconic-font.css">
+<link rel="stylesheet" href="./assets/material-icon/css/material-design-iconic-font.min.css">
 
 <br>
+
+<!-- Styles for the icons -->
+<style media="screen">
+  .material-icons.yelloww { color: #ffeb3b; }
+  .material-icons.redd { color: #f44336; }
+  .zmdi.greenn { color: #00e676; }
+
+
+</style>
+
    <!-- Page Layout here -->
     <div class="row">
       <div class="">
 
         <div class="col s3 offset-s1">
           <!-- Grey navigation panel -->
-          	<span class="flow-text"><img src="http://www.hdrspotting.com/images/default_profile.jpg"></span>
-          	<h3 class="userName"><%= user.local.name || user.facebook.name %></h3>
-            <p class="userId"> <%= user._id %> </p>
-            <div class="">Hotness</div>
-            <div class="rw-ui-container"></div>
-            <h5>$$$$$$$$$$$$$$$</h5>
+            <% if (user.pictureURL) { %>
+              <span class="flow-text"><img id='profile-pic' src='<%=user.pictureURL %>'></span>
+            <% } %>
+
+            <% if (user.pictureURL == undefined ) { %>
+          	   <span class="flow-text"><img id='profile-pic' src="http://www.hdrspotting.com/images/default_profile.jpg"></span>
+            <% } %>
+
+            <h3 class="userName"><%= user.local.name || user.facebook.name %></h3>
+
+            <div class="">Rating</div>
+
+            <div class="ratings">
+              <i id="r1" class='material-icons'>grade</i>
+              <i id="r2" class='material-icons'>grade</i>
+              <i id="r3"class='material-icons'>grade</i>
+              <i id="r4" class='material-icons'>grade</i>
+              <i id="r5" class='material-icons'>grade</i>
+            </div>
+
+
+            <div class="">Money</div>
+
+            <div class="monies">
+              <i id="m1"class="zmdi zmdi-money zmdi-hc-3x"></i>
+              <i id="m2"class="zmdi zmdi-money zmdi-hc-3x"></i>
+              <i id="m3"class="zmdi zmdi-money zmdi-hc-3x"></i>
+              <i id="m4"class="zmdi zmdi-money zmdi-hc-3x"></i>
+              <i id="m5"class="zmdi zmdi-money zmdi-hc-3x"></i>
+            </div>
+
+            <div class="">Date Cost</div>
+            <div class="costs">
+              <i id="c1" class='material-icons'>grade</i>
+              <i id="c2"class='material-icons'>grade</i>
+              <i id="c3"class='material-icons'>grade</i>
+              <i id="c4"class='material-icons'>grade</i>
+              <i id="c5"class='material-icons'>grade</i>
+            </div>
+
             <br>
-          <a class="waves-effect waves-light btn blue"><i class="material-icons left">recent_actors</i>Feed</a>
+            <a href="/" method="GET" class="waves-effect waves-light btn blue"><i class="material-icons left">recent_actors</i>Feed</a>
             <br><br>
-
-            <ul class="collapsible" data-collapsible="accordion">
-              <li>
-                <div class="collapsible-header blue"><i class="material-icons">se</i>First</div>
-                <div class="collapsible-body blue"><p>Lorem ipsum dolor sit amet.</p></div>
-              </li>
-            </ul>
-
+            <a href="/settings" method="GET" class="waves-effect waves-light btn blue"><i class="material-icons left">settings</i>Settings</a>
+            <br><br>
 
         </div>
 
@@ -50,59 +89,213 @@
             </li>
       </ul> -->
 
-      <script type="text/javascript">
-        window.onload = function() {
-
-          console.log($('.userId').html())
-          var user_id = $('.userId').text()
-          var i = 0
-          $.ajax({
-            url: '/users/<%= user._id %>', // + user_id,
-            method: 'GET',
-            success: function(curr_user){
-              // console.log(curr_user)
-                var commenter_name = null;
-                var title = null;
-                var text = null;
-                var commenters = [];
-              for (i ; i < curr_user.comments.length; i++){
-                // console.log(curr_user.comments[i].entry)
-
-                title = curr_user.comments[i].title
-                text = curr_user.comments[i].entry
-                $('.appendTo').append("<div id='" + curr_user.comments[i]._creator + "'> </div>").last()
-                $('#' + curr_user.comments[i]._creator).append("<p>" + curr_user.comments[i].title + "</p>");
-                $('#' + curr_user.comments[i]._creator).append("<br><br><br>")
-                $('#' + curr_user.comments[i]._creator).append("<span class='flow-text'>" + curr_user.comments[i].entry + "</span>");
-
-                $.ajax({
-                  url: '/users/' + curr_user.comments[i]._creator,
-                  method: 'GET',
-                  success: function(commenter){
-
-                    var commenterId = commenter._id
-                    var commenter = commenter.local || commenter.facebook
-                    console.log(commenterId);
-                    $('#' + commenterId).append("<h4>" + commenter.name + "</h4>");
-
-                  },
-                  error: function(){
-                    console.log("Error retrienving name")
-                  }
-                })
-
-
-              }
-              console.log(commenters)
-            },
-            error: function() {
-              console.log("I failed master");
-            }
-          })
-        }
-      </script>
 
           <div class="appendTo"></div>
 
         </div><br>
+
     </div>
+
+
+
+
+          <script type="text/javascript">
+            window.onload = function() {
+
+              var promise = null;
+              var promise2 = null;
+              var curr_user_comments = null;
+              var global_index = 0;
+
+              /*First get array of users*/
+              promise = $.ajax({
+                  url: '/users/<%= user._id %>',
+                  method: 'GET',
+                  success: function(curr_user) {
+
+                    /*FIRST we must populate the average ratings, then populate the comments*/
+                    var rating_arr = curr_user.ratings;
+                    var money_arr = curr_user.moneys;
+                    var cost_arr = curr_user.dateCosts;
+
+                    var avg_rating = 0;
+                    var avg_money = 0;
+                    var avg_cost = 0;
+                    var length = 0;
+
+
+                    for(var i = 0; i < rating_arr.length; i++){
+
+                      if (rating_arr[i] != null){
+                        console.log('RATING IS: ', rating_arr[i])
+                          avg_rating += rating_arr[i];
+                          length++;
+                      }
+                    }
+                    avg_rating = (avg_rating / length);
+                    length = 0;
+
+                    for(var i = 0; i < money_arr.length; i++){
+                      if (money_arr[i] != null){
+                        avg_money += money_arr[i];
+                        length++;
+                      }
+                    }
+                    avg_money = (avg_money / length);
+                    length = 0;
+
+                    for(var i = 0; i < cost_arr.length; i++){
+                      if (cost_arr[i] != null){
+                        avg_cost += cost_arr[i];
+                        length++
+                      }
+                    }
+                    avg_cost = (avg_cost / length);
+
+
+                    console.log("CURRENT USER=======", curr_user)
+
+
+                    for (var i = 0; i < avg_rating; i++){
+                      $('#r' + (i + 1)).addClass('yelloww')
+                    }
+
+                    for (var i = 0; i < avg_money; i++){
+                      $('#m' + (i + 1)).addClass('greenn')
+                    }
+
+
+                    for (var i = 0; i < avg_rating; i++){
+                      console.log(avg_rating)
+                      $('#c' + (i + 1)).addClass('redd')
+                    }
+
+
+                    /**************READ AJAX starts here******************/
+
+                    if (curr_user.comments.length == 0){
+                      $('.appendTo').append("<h1> You have no comments yet! </h1>")
+                      return;
+                    }
+
+                    curr_user_comments = curr_user.comments;
+                  },
+                  error: function() {
+                    console.log('I have failed master at gettings comments :(')
+                  }
+              });
+
+              promise.done(function() {
+                console.log(curr_user_comments);
+                  if (global_index < curr_user_comments.length){
+                    do_ajax(global_index);
+                  }
+                })
+
+              function do_ajax(index){
+
+                if ( global_index != curr_user_comments.length) {
+                   console.log(index)
+                    $.ajax({
+                      url: '/users/' + curr_user_comments[index]._creator,
+                      method: 'GET',
+                      success: function(commenter){
+                        console.log("Commenter is: ", commenter)
+
+                        if (commenter !== null){
+
+                          if (commenter.local === undefined){
+                            commenter_name = commenter.facebook.name
+                          }
+                          else {
+                            commenter_name = commenter.local.name
+                          }
+                        }
+                        else {
+                          commenter_name = 'User no longer exists'
+                        }
+
+                        console.log(commenter_name)
+                        console.log(curr_user_comments[index])
+
+                        if (appendTo(commenter_name, index)){
+                          global_index++;
+                          do_ajax(global_index)
+                        }
+                      },
+                      error: function(){
+                        console.log('I have failed master');
+                      }
+                    })
+                }
+              }
+
+              function appendTo(commenter_name, index) {
+
+                var star_rating = '';
+
+                $('.appendTo').append("<div class='chip' id='" + curr_user_comments[index]._creator + "'>" +  commenter_name + "</div>")
+                $('#' + curr_user_comments[index]._creator).append("<h4 class='bold'>" + curr_user_comments[index].title +  "</h4>")
+                $('#' + curr_user_comments[index]._creator).append("<span class='flow-text'>" + curr_user_comments[index].entry + "</span>")
+                /*for(var i = 0; i < curr_user_comments[index].rating; i++){
+                  star_rating +=  "<i class='material-icons'>star_rate</i>"
+                }
+                if (star_rating != ''){
+                  $('#' + curr_user_comments[index]._creator).append("<div>" + star_rating + "</div>")
+                }*/
+                $('#' + curr_user_comments[index]._creator).append("<br><br><br>")
+
+
+                return true
+              }
+
+              /*console.log($('.userId').html())
+              var user_id = $('.userId').text()
+              var i = 0
+
+
+              $.ajax({
+                url: '/users/<%= user._id %>', // + user_id,
+                method: 'GET',
+                success: function(curr_user){
+                  // console.log(curr_user)
+                    var commenter_name = null;
+                    var title = null;
+                    var text = null;
+                    var commenters = [];
+                  for (i ; i < curr_user.comments.length; i++){
+                    // console.log(curr_user.comments[i].entry)
+
+                    title = curr_user.comments[i].title
+                    text = curr_user.comments[i].entry
+                    $('.appendTo').append("<div id='" + curr_user.comments[i]._creator + "'> </div>").last()
+                    $('#' + curr_user.comments[i]._creator).append("<p>" + curr_user.comments[i].title + "</p>");
+                    $('#' + curr_user.comments[i]._creator).append("<br><br><br>")
+                    $('#' + curr_user.comments[i]._creator).append("<span class='flow-text'>" + curr_user.comments[i].entry + "</span>");
+
+                    $.ajax({
+                      url: '/users/' + curr_user.comments[i]._creator,
+                      method: 'GET',
+                      success: function(commenter){
+
+                        var commenterId = commenter._id
+                        var commenter = commenter.local || commenter.facebook
+                        console.log(commenterId);
+                        $('#' + commenterId).append("<h4>" + commenter.name + "</h4>");
+
+                      },
+                      error: function(){
+                        console.log("Error retrienving name")
+                      }
+                    })
+
+
+                  }
+                  console.log(commenters)
+                },
+                error: function() {
+                  console.log("I failed master");
+                }
+              })*/
+            }
+          </script>
