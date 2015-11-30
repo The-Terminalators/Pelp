@@ -34,9 +34,11 @@ function showUser(req, res){
 }
 
 function deleteUser(req, res){
+  console.log("WE ARE DELETEING=======", req)
   User.remove({ _id: req.params.id}, function(err){
     if (err) console.log(err);
     res.json({success: true, message: "User deleted"});
+    res.redirect('/')
   });
 }
 

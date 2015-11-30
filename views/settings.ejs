@@ -1,32 +1,47 @@
+
+<script type="text/javascript" src="./assets/ajax/settings.js" ></script>
+
+<span id="NAME" style="display:none"> <%= user.local.name || user.facebook.name %> </span>
+<span id="EMAIL" style="display:none"> <%= user.local.email || user.facebook.email %></span>
+<span id="ID" style="display:none"> <%= user._id %></span>
+
+
+
+
 <div class="container">
+
   <h1>Settings</h1>
+  <% if (user.local == null) { %>
+    <div class="row">
+        <form class="col s12">
 
-  <div class="row">
-      <form class="col s12">
-        <div class="row">
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="name" type="text" class="validate" autofocus>
+              <label for="name">Name</label>
+            </div>
+          </div>
 
-        <div class="row">
-          <div class="input-field col s12">
-            <input id="name" type="text" class="validate">
-            <label for="name">Name</label>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="password" type="password" class="validate">
+              <label for="password">Password</label>
+            </div>
           </div>
-        </div>
-              
-        <div class="row">
-          <div class="input-field col s12">
-            <input id="password" type="password" class="validate">
-            <label for="password">Password</label>
-          </div>
-        </div>
-        
-        <div class="row">
-          <div class="input-field col s12">
-            <input id="email" type="email" class="validate">
-            <label for="email" data-error="wrong" data-success="right">Email</label>
-          </div>
-        </div>
-        
-        <button type="submit" class="waves-effect waves-light btn submit-btn">Delete Account</button>
 
-      </form>
-    </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="email" type="email" class="validate">
+              <label for="email" data-error="wrong" data-success="right">Email</label>
+            </div>
+          </div>
+
+            <button id="update-button" class="blue waves-effect waves-light btn submit-btn">Enter Changes</button>
+            <button id="delete-button" class="right red waves-effect waves-light btn submit-btn">Delete Account</button>
+          </form>
+      </div>
+    <% } %>
+    <% if(user.facebook != null) {%>
+      <h5>Facebook Users cannot edit their profile</h5>
+    <%}%>
+</div>
