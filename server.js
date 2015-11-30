@@ -14,6 +14,12 @@ var socket = require('socket.io');
 var userRoutes = require('./routes/users.js');
 var passportConfig = require('./config/passport.js');
 
+
+var formidable = require('formidable');
+var util = require('util');
+var fs   = require('fs-extra');
+var qt   = require('quickthumb');
+
 var port = process.env.PORT || 3000;
 
 mongoose.connect('mongodb://admin:terminalat0r@ds057234.mongolab.com:57234/usersdb', function(err){
@@ -43,6 +49,36 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+
+
+app.use(qt.static(__dirname + '/'));
+app.post('/upload', function (req, res){
+  var form = new formidable.IncomingForm();
+  form.parse(req, function(err, fields, files) {
+    res.writeHead(200, {'content-type': 'text/plain'});
+    res.write('received upload:\n\n');
+    res.end(util.inspect({fields: fields, files: files}));
+  });
+
+
+form.on('end', function(fields, files) {
+    /* Temporary location of our uploaded file */
+    var temp_path = this.openedFiles[0].path;
+    /* The file name of the uploaded file */
+    var file_name = this.openedFiles[0].name;
+    /* Location where we want to copy the uploaded file */
+    var new_location = 'uploads/';
+    fs.copy(temp_path, new_location + file_name, function(err) {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log("success!")
+      }
+    });
+  });
+});
+
+
 
 /*Home/ Landing page and root route*/
 // app.get('/', function(req, res){
