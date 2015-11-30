@@ -22,8 +22,15 @@
 
         <div class="col s3 offset-s1">
           <!-- Grey navigation panel -->
-          	<span class="flow-text"><img src="http://www.hdrspotting.com/images/default_profile.jpg"></span>
-          	<h3 class="userName"><%= user.local.name || user.facebook.name %></h3>
+            <% if (user.pictureURL) { %>
+              <span class="flow-text"><img id='profile-pic' src='<%=user.pictureURL %>'></span>
+            <% } %>
+
+            <% if (user.pictureURL == undefined ) { %>
+          	   <span class="flow-text"><img id='profile-pic' src="http://www.hdrspotting.com/images/default_profile.jpg"></span>
+            <% } %>
+
+            <h3 class="userName"><%= user.local.name || user.facebook.name %></h3>
 
             <div class="">Rating</div>
 

@@ -66,6 +66,10 @@ function updateUser(req, res){
       //console.log(user.local.password)
     }
 
+    if (req.body.pictureURL !== undefined){
+      user.pictureURL = req.body.pictureURL;
+    }
+
     user.save(function(err){
       if (err) res.send(err);
       res.json({message: "Success!"});

@@ -27,6 +27,17 @@
               <label for="email" data-error="wrong" data-success="right">Email</label>
             </div>
           </div>
+
+
+
+          <div class="row">
+             <div class="input-field col s12">
+               <input id="picurl" type="text" class="validate">
+               <label class="active" for="picurl">Picture URL</label>
+             </div>
+         </div>
+
+
           <!--
           <div class="row">
             <div class="input-field col s12">
@@ -49,8 +60,18 @@
 
     <% } %>
     <% if(user.facebook.name != null) {%>
-      <h5>Facebook Users can only delete their profile... sorry :(</h5>
-      <br><br>
+      <h5>Facebook Users can only update their profile pic... sorry :(</h5>
+
+      <div class="row">
+         <div class="input-field col s12">
+           <input id="picurl" type="text" class="validate">
+           <label class="active" for="picurl">Picture URL</label>
+         </div>
+     </div>
+
+     <button id="profile-button" class="center green waves-effect waves-light btn">Update profile pic</button>
+
+      <br><br><br><br><br>
       <a  href='/' class="left blue waves-effect waves-light btn">Back to safety</a>
       <button id="delete-button" class="red right waves-effect waves-light btn submit-btn">Delete Account</button>
     <% } %>
@@ -72,11 +93,37 @@ window.onload = function() {
   console.log("EMAIL IS: ", user_email)
   //console.log("USER: ", user_obj)
 
+
+
+  $('#profile-button').click(function(event){
+    event.preventDefault();
+    var picURL = $('#picurl').val().toString();
+    if (picURL == ''){
+      picURL = undefined;
+    }
+    $.ajax({
+      url: '/users/<%= user._id%>',
+      method: 'PATCH',
+      dataType: 'json',
+      data: {
+        pictureURL: picURL
+      },
+      success: function(data, textStatus, jqXHR) {
+        console.log(data)
+
+      },
+      error: function(jqXHR, textStatus, errorThrown){
+        console.log(errorThrown)
+      }
+    })
+  })
+
   $('#update-button').click(function(event){
 
     event.preventDefault();
     var input_name =  $('#name').val().toString();
     var input_email = $('#email').val().toString();
+    var input_pic = $('#picurl').val().toString();
     //var input_password = $('#password').val().toString();
 
     if (input_name == ''){
@@ -84,6 +131,10 @@ window.onload = function() {
     }
     if (input_email == ''){
       input_email = undefined;
+    }
+
+    if (input_pic == ''){
+      input_pic == undefined;
     }
     /*if (input_password == ''){
       alert('You must input your password');
@@ -99,6 +150,7 @@ window.onload = function() {
       data: {
         name: input_name,
         email: input_email,
+        pictureURL: input_pic
       },
       success: function(data, textStatus, jqXHR){
         console.log(data)

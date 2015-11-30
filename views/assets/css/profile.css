@@ -29,3 +29,7 @@
    content: "\2605";
    position: absolute;
 }
+
+#profile-pic {
+  max-width: 200px;
+}

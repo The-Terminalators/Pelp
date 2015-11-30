@@ -21,7 +21,8 @@ var userSchema = new Schema ({
   overallMoney: {type: Number,  max: 5},
   moneys: [],
   overallDateCost: {type: Number,  max: 5},
-  dateCosts: []
+  dateCosts: [],
+  pictureURL: String
 });
 
 userSchema.methods.generateHash = function(password){
